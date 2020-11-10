@@ -1,7 +1,7 @@
 class Solution:
     # @param A : list of integers
     # @return an integer
-    def cntBits(self, A):
+    def cntBits_unoptimised(self, A):
         
         # i = 0
         # X = max(A)
@@ -46,6 +46,17 @@ class Solution:
                 ret = (ret+count)%(1e9+7)
 
         return int(2*ret)
+    
+    def cntBits(self, A):
+        ret = 0
+        for sz in range(32):
+            sum = 0
+            for i in range(len(A)):
+                sum = (sum+A[i]%2)%(1e9+7)
+                A[i] = A[i]//2
+            
+            ret = (ret + sum*(len(A)-sum))%(1e9+7)
+        return int((2*ret)%(1e9+7))
 
 sol = Solution()
-print(sol.cntBits([2,2,2]))
+print(sol.cntBits([1,3,5,7]))
